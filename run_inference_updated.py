@@ -72,7 +72,7 @@ def main():
         
         img_pairs = []
         for ext in args.img_exts:
-            test_files = data_dir.files(f'*{i+1}.{ext}')
+            test_files = data_dir.files(f'*{1}.{ext}')
             for file in test_files:
                 img_pair = file.parent / (file.stem[:-1] + f'{i+2}.{ext}')
                 if img_pair.isfile():
@@ -106,7 +106,7 @@ def main():
             if args.upsampling is not None:
                 output = F.interpolate(output, size=img1.size()[-2:], mode=args.upsampling, align_corners=False)
             for suffix, flow_output in zip(['flow', 'inv_flow'], output):
-                filename = save_path/'{}{}_{}{}'.format(img1_file.stem[:-1], i+1, i+2, suffix)
+                filename = save_path/'{}{}{}'.format(img1_file.stem[:-1], i+1, suffix)
                 if args.output_value in['vis', 'both']:
                     rgb_flow = flow2rgb(args.div_flow * flow_output, max_value=args.max_flow)
                     to_save = (rgb_flow * 255).astype(np.uint8).transpose(1,2,0)
